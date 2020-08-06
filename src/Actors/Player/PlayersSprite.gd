@@ -2,11 +2,10 @@ extends Node2D
 
 onready var playerAnimation = $PlayerAnimation
 onready var gunAnimation = $GunAnimation
-var is_shooting = false
  
 
 # Arguments: flip: bool, running: bool, shooting: bool, dead: bool
-func _on_Player_animate_movement(flip, running, shooting):
+func _on_Player_animate_movement(flip, running, shooting, hurt_dead):
 	if not flip:
 		$Player.flip_h = false
 		$GunSheet.flip_h = false
@@ -19,6 +18,8 @@ func _on_Player_animate_movement(flip, running, shooting):
 		gunAnimation.play("shoot")
 	if shooting[1]:
 		gunAnimation.play("reload")
+	if hurt_dead[0]:
+		playerAnimation.play("hurt")
 	if running:
 		playerAnimation.play("run")
 

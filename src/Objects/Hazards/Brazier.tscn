@@ -1,0 +1,68 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_01.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_02.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_04.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_07.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_06.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_08.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_05.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_03.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_12.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_09.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_10.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_16.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_14.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_15.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_13.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Graphics/Hazards/Brazier/Brazier_11.png" type="Texture" id=16]
+[ext_resource path="res://src/Objects/Hazards/Brazier.gd" type="Script" id=17]
+[ext_resource path="res://Assets/Graphics/Light/light.png" type="Texture" id=18]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 9 ), ExtResource( 15 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "default",
+"speed": 24.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 21.8682, 17.3042 )
+
+[sub_resource type="OccluderPolygon2D" id=3]
+polygon = PoolVector2Array( -21.2127, -6.47842, -11.2865, -7.41486, 17.7432, -7.60215, 21.8636, -6.10384, 22.2382, 27.9826, -21.2127, 28.3572 )
+
+[node name="Brazier" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 9
+script = ExtResource( 17 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+frame = 12
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.205402, 11.1054 )
+shape = SubResource( 2 )
+
+[node name="HurtArea2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtArea2D"]
+polygon = PoolVector2Array( -19.0252, -6.30391, 16.9231, -6.30391, 14.6107, -22.386, -17.869, -22.2809 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+light_mask = 6
+occluder = SubResource( 3 )
+light_mask = 6
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( -7.62939e-06, -24.8323 )
+texture = ExtResource( 18 )
+texture_scale = 0.25
+energy = 2.64
+range_item_cull_mask = 6
+shadow_enabled = true
+shadow_item_cull_mask = 6
+[connection signal="body_entered" from="HurtArea2D" to="." method="_on_HurtArea2D_body_entered"]

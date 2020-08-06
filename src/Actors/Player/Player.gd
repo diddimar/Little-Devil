@@ -1,10 +1,11 @@
 extends KinematicBody2D
 
+
 # Variables for moving around
 const FLOOR_NORMAL = Vector2.UP
 const WALK_SPEED: = 300
 const GRAVITY = 2800
-const JUMP_SPEED = 900
+const JUMP_SPEED = 1100
 const friction: float = 0.1
 const acceleration: float = 0.25
 var velocity = Vector2(0,0)
@@ -17,19 +18,19 @@ var flip_sprite = false
 signal animate_movement
 signal animate_gun
 
-var dead = false
+var hurt_dead = [false, false]
 const GUNSHOT = preload("res://src/Actors/GunShot.tscn")
 var bullets = 6
 var can_shoot = true
+
+func _ready():
+	pass
 
 
 func _physics_process(delta):
 	handle_movement(delta)
 	handle_animation()
 	check_zoom()
-
-func _input(event):
-	pass
 
 func handle_movement(delta):
 	# Handle horizontal movement
@@ -68,7 +69,7 @@ func handle_animation():
 		# Is moving left
 		flip_sprite = true
 
-	emit_signal("animate_movement", flip_sprite, running, shooting)
+	emit_signal("animate_movement", flip_sprite, running, shooting, hurt_dead)
 
 	vertical_position += global_position.x - vertical_position
 
@@ -79,7 +80,6 @@ func handle_shooting() -> Array:
 	var is_shooting = is_shooting()
 	var has_to_reload = has_to_reload()
 	return [is_shooting, has_to_reload]
-
 
 func is_shooting() -> bool:
 	if Input.is_action_just_pressed("shoot") and can_shoot:
@@ -113,7 +113,6 @@ func reload():
 	yield(get_tree().create_timer(0.8), "timeout")
 	can_shoot = true
 
-
 func set_gunshot_start_position():
 	if Input.is_action_pressed("move_right"):
 		if sign($FirePosition2D.position.x) == -1:
@@ -125,13 +124,32 @@ func set_gunshot_start_position():
 
 
 func player_death():
-	dead = true
-	emit_signal("animate_movement", Vector2(0,0), is_on_floor(), dead, false)
+	hurt_dead[1] = true
+	#emit_signal("animate_movement", Vector2(0,0), is_on_floor(), dead, false)
 	yield(get_tree().create_timer(2.0), "timeout")
 	var point_B = Vector2(495, 645)
 	position = point_B
 	$Camera2D.zoom = Vector2(1, 1)
-	dead = false
+	hurt_dead[1] = false
+
+func player_entered_hazard():
+	player_hurt()
+	velocity = hurt_impulse()
+
+func hurt_impulse() -> Vector2:
+	var out = velocity
+	out.y = -800
+	# Ternary operator
+	out.x = -400 if flip_sprite else 400
+	return out
+
+func player_hurt():
+	hurt_dead[0] = true
+	can_shoot = false
+	yield(get_tree().create_timer(0.3), "timeout")
+	hurt_dead[0] = false
+	can_shoot = true
+
 
 
 func check_zoom():

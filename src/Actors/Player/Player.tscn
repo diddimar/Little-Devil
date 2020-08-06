@@ -4,8 +4,9 @@
 [ext_resource path="res://Assets/Graphics/Light/light.png" type="Texture" id=2]
 [ext_resource path="res://src/Actors/Player/Player.gd" type="Script" id=62]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4.25796, 9.0637 )
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 3.72703
+height = 10.7857
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 4
@@ -18,11 +19,15 @@ position = Vector2( 2.05899, 0.17411 )
 shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 current = true
+limit_left = 0
+limit_bottom = 1040
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 smoothing_enabled = true
 smoothing_speed = 15.0
+offset_v = -1.0
 
 [node name="FirePosition2D" type="Position2D" parent="."]
 position = Vector2( 16, 3.5 )

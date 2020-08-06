@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/Actors/Player/PlayersSprite.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/Player/Player_Sheet_Color.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Graphics/Gun/Gun_Sheet.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Sounds/Player/singleShot.wav" type="AudioStream" id=4]
 [ext_resource path="res://Assets/Sounds/Player/reload.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sounds/Player/hurt.wav" type="AudioStream" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "death"
@@ -21,6 +22,36 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 4, 4 ), Vector2( 5, 4 ), Vector2( 6, 4 ), Vector2( 7, 4 ), Vector2( 0, 5 ), Vector2( 1, 5 ), Vector2( 2, 5 ), Vector2( 3, 5 ), Vector2( 4, 5 ), Vector2( 5, 5 ), Vector2( 6, 5 ), Vector2( 7, 5 ), Vector2( 0, 6 ), Vector2( 1, 6 ), Vector2( 2, 6 ), Vector2( 3, 6 ), Vector2( 4, 6 ), Vector2( 5, 6 ), Vector2( 6, 6 ), Vector2( 7, 6 ), Vector2( 0, 7 ), Vector2( 1, 7 ), Vector2( 2, 7 ), Vector2( 3, 7 ), Vector2( 4, 7 ), Vector2( 5, 7 ), Vector2( 6, 7 ), Vector2( 7, 7 ), Vector2( 0, 8 ), Vector2( 1, 8 ), Vector2( 2, 8 ), Vector2( 3, 8 ), Vector2( 4, 8 ), Vector2( 5, 8 ), Vector2( 6, 8 ), Vector2( 7, 8 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "hurt"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Player:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 3 ), Vector2( 1, 3 ), Vector2( 2, 3 ) ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.190245,
+"start_offset": 0.0,
+"stream": ExtResource( 6 )
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="Animation" id=3]
@@ -57,8 +88,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ), Vector2( 4, 1 ), Vector2( 5, 1 ), Vector2( 6, 1 ), Vector2( 7, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "idle"
+[sub_resource type="Animation" id=5]
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -104,8 +134,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 2 ), Vector2( 1, 2 ), Vector2( 2, 2 ), Vector2( 3, 2 ), Vector2( 4, 2 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "shoot"
+[sub_resource type="Animation" id=7]
 length = 0.2
 step = 0.025
 tracks/0/type = "value"
@@ -152,14 +181,15 @@ hframes = 8
 frame = 16
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource( 6 )
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 anims/death = SubResource( 1 )
+anims/hurt = SubResource( 2 )
 anims/jump = SubResource( 3 )
 anims/run = SubResource( 4 )
 
 [node name="GunAnimation" type="AnimationPlayer" parent="."]
-anims/idle = SubResource( 2 )
+anims/idle = SubResource( 5 )
 anims/reload = SubResource( 6 )
-anims/shoot = SubResource( 5 )
+anims/shoot = SubResource( 7 )
