@@ -19,7 +19,7 @@ signal animate_movement
 signal animate_gun
 
 var hurt_dead = [false, false]
-const GUNSHOT = preload("res://src/Actors/GunShot.tscn")
+const GUNSHOT = preload("res://src/Actors/Gunshot/GunShot.tscn")
 var bullets = 6
 var can_shoot = true
 
