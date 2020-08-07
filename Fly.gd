@@ -21,8 +21,17 @@ var target_player_dist = 40
 var eye_reach = 90
 var vision = 600
 
+var vertical_movement = 0
+var horizontal_movement = 200
+
 func _ready():
 	set_process(true)
+	randomize()
+	#Generate random negative number betweeen 400 and 800
+	vertical_movement = -1 * ( (randi() % 800) + 400 )
+	#Generate random number betweeen 200 and 700
+	horizontal_movement = (randi() % 700) + 200 
+	print(randi())
 
 func set_dir(target_dir):
 	if next_dir != target_dir:
@@ -70,10 +79,10 @@ func movement(delta):
 
 	if OS.get_ticks_msec() > next_jump_time and next_jump_time != -1 and is_on_floor():
 		if Player.position.y < position.y - 64 and sees_player():
-			vel.y = -400
+			vel.y = vertical_movement
 		next_jump_time = -1
 
-	vel.x = dir * 200
+	vel.x = dir * horizontal_movement
 
 	if Player.position.y < position.y - 64 and next_jump_time == -1 and sees_player():
 		next_jump_time = OS.get_ticks_msec() + react_time
@@ -94,3 +103,8 @@ func kill():
 	$Sprite.modulate = Color(0,1,0)
 	yield(get_tree().create_timer(0.5), "timeout")
 	queue_free()
+
+
+func _on_Area2D_body_entered(body):
+	if(body.name == "Player" and not dead):
+		body.player_hurt(5)

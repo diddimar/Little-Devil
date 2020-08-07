@@ -41,10 +41,10 @@ respawn_point = Vector2( 134, 0 )
 [node name="Hazards" type="Node" parent="."]
 
 [node name="Brazier" parent="Hazards" instance=ExtResource( 4 )]
-position = Vector2( 991.904, 998.104 )
+position = Vector2( 993.463, 999.44 )
 
 [node name="Brazier2" parent="Hazards" instance=ExtResource( 4 )]
-position = Vector2( 1760.52, 899.892 )
+position = Vector2( 1760.74, 903.456 )
 
 [node name="Spikes" parent="Hazards" instance=ExtResource( 5 )]
 position = Vector2( 554.99, 827.621 )
@@ -56,10 +56,25 @@ rotation = 3.14159
 [node name="Enemies" type="Node" parent="."]
 
 [node name="Fly" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 2264.3, 837.741 )
+position = Vector2( 551.841, 604.657 )
 
 [node name="Fly2" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 2633.81, 495.674 )
+position = Vector2( 1232.92, 752.543 )
 
 [node name="Fly3" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 3280.73, 733.516 )
+position = Vector2( 2108.18, 809.625 )
+
+[node name="Fly4" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 1965.47, 457.62 )
+
+[node name="Fly5" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 2662.35, 595.568 )
+
+[node name="Fly6" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 3002.46, 695.461 )
+
+[node name="Fly7" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 3468.63, 783.462 )
+
+[node name="Fly8" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 3337.82, 590.357 )

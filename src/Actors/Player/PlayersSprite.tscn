@@ -47,7 +47,7 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "clips": [ {
-"end_offset": 0.190245,
+"end_offset": 0.0276718,
 "start_offset": 0.0,
 "stream": ExtResource( 6 )
 } ],

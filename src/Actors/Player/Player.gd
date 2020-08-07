@@ -161,7 +161,7 @@ func hurt_impulse() -> Vector2:
 
 func player_death():
 	print("player dead")
-	if Globals.lives == 0:
+	if Globals.lives == 1:
 		game_over()
 	else:
 		remove_live_and_respawn()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Fly.gd" type="Script" id=9]
 [ext_resource path="res://Assets/Graphics/Enemies/Fly/FlyingEnemy_Sheet.png" type="Texture" id=10]
@@ -41,6 +41,9 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 6, 0 ), Vector2( 7, 0 ) ]
 }
 
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 6.30922, 8.25122 )
+
 [node name="Fly" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 8
@@ -65,3 +68,9 @@ frame = 8
 autoplay = "Flying"
 anims/Dead = SubResource( 4 )
 anims/Flying = SubResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 5 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
