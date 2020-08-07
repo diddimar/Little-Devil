@@ -6,7 +6,7 @@ onready var Player = get_parent().get_parent().get_node("Player")
 var dead = false
 var vel = Vector2(0, 0)
 
-var grav = 800
+var grav = 1200
 var max_grav = 2000
 
 var react_time = 400
@@ -26,12 +26,14 @@ var horizontal_movement = 200
 
 func _ready():
 	set_process(true)
+	randomize_fly_physics()
+
+func randomize_fly_physics():
 	randomize()
 	#Generate random negative number betweeen 400 and 800
 	vertical_movement = -1 * ( (randi() % 800) + 400 )
 	#Generate random number betweeen 200 and 700
 	horizontal_movement = (randi() % 700) + 200 
-	print(randi())
 
 func set_dir(target_dir):
 	if next_dir != target_dir:
@@ -101,7 +103,7 @@ func kill():
 	dead = true
 	$AnimationPlayer.play("Dead")
 	$Sprite.modulate = Color(0,1,0)
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield(get_tree().create_timer(0.8), "timeout")
 	queue_free()
 
 
