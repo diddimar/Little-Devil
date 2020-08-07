@@ -124,7 +124,7 @@ func has_to_reload() -> bool:
 func reload():
 	can_shoot = false
 	bullets = 6
-	yield(get_tree().create_timer(0.8), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	can_shoot = true
 
 func set_gunshot_start_position():

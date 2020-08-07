@@ -17,6 +17,8 @@ func _on_VisibilityNotifier2D_screen_exited():
 
 
 func _on_GunShot_body_entered(body):
+	if(body.name.begins_with("Fly")):
+		body.kill()
 	var bullet_hit_instance = bullet_hit.instance()
 	bullet_hit_instance.position = get_global_position()
 	get_tree().get_root().add_child(bullet_hit_instance)
