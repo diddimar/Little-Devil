@@ -39,10 +39,12 @@ func _physics_process(delta):
 	apply_gravity(delta)
 	if not hurt_dead[1]:
 		handle_movement()
-		handle_jump()	
 		handle_animation()
 		check_zoom()
 
+func _input(event):
+	if not hurt_dead[1]:
+		handle_jump()
 
 func game_loop():
 	vertical_position += global_position.x - vertical_position
@@ -66,7 +68,10 @@ func handle_movement():
 
 func handle_jump():
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor():
+		var is_close_to_ground = $RayCast2D.is_colliding() or $RayCast2D2.is_colliding()
+		if is_on_floor() or is_close_to_ground:
+#			print("close_to_ground: ", is_close_to_ground)
+#			print("is_on_floor: ", is_on_floor())
 			velocity.y = -JUMP_SPEED
 	var is_jump_interrupted = Input.is_action_just_released("jump") and velocity.y < 0.0
 	if is_jump_interrupted:

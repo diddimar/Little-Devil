@@ -35,6 +35,7 @@ position = Vector2( 16, 3.5 )
 
 [node name="Light2D" type="Light2D" parent="."]
 light_mask = -2147483642
+position = Vector2( -0.222725, -0.111366 )
 texture = ExtResource( 2 )
 energy = 3.63
 range_item_cull_mask = 6
@@ -42,4 +43,18 @@ shadow_enabled = true
 shadow_item_cull_mask = 6
 
 [node name="Hud" parent="." instance=ExtResource( 3 )]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 2, 12 )
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 4
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2( 2, 12 )
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 0, -15 )
+collision_mask = 4
 [connection signal="animate_movement" from="." to="PlayersSprite" method="_on_Player_animate_movement"]
