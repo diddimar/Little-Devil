@@ -1,7 +1,11 @@
 extends KinematicBody2D
 
+signal animate_movement
+signal animate_gun
+
 export var world_limit = 1040 # Y axis death position and camera Y limit
 export var respawn_point = Vector2(0, 0)
+
 # Variables for moving around
 const FLOOR_NORMAL = Vector2.UP
 const WALK_SPEED: = 300
@@ -11,15 +15,15 @@ const friction: float = 0.1
 const acceleration: float = 0.25
 var velocity = Vector2(0,0)
 
-
-# Used to calculate facing direction
+# Vars used to handle facing direction
 var vertical_position = 0.0
 var flip_sprite = false
 
-signal animate_movement
-signal animate_gun
 
 var hurt_dead = [false, false]
+var health = 100
+onready var hp_bar = $Hud/CanvasLayer/HealthBar
+
 const GUNSHOT = preload("res://src/Actors/Gunshot/GunShot.tscn")
 var bullets = 6
 var can_shoot = true
@@ -27,6 +31,8 @@ var can_shoot = true
 
 func _ready():
 	$Camera2D.limit_bottom = world_limit
+	hp_bar.on_health_updated(health)
+
 
 func _physics_process(delta):
 	game_loop()
@@ -40,9 +46,7 @@ func _physics_process(delta):
 
 func game_loop():
 	vertical_position += global_position.x - vertical_position
-	
-	if global_position.y > world_limit:
-		player_death()
+	check_player_death()
 
 func apply_gravity(delta):
 	velocity.y += GRAVITY * delta
@@ -131,13 +135,15 @@ func set_gunshot_start_position():
 
 
 # Player hurt / death Start
-func player_entered_hazard():
-	player_hurt()
+func player_entered_hazard(hurt_amount):
+	player_hurt(hurt_amount)
 	velocity = hurt_impulse()
 
-func player_hurt():
+func player_hurt(hurt_amount):
 	hurt_dead[0] = true
 	can_shoot = false
+	health -= hurt_amount
+	hp_bar.on_health_updated(health)
 	yield(get_tree().create_timer(0.3), "timeout")
 	hurt_dead[0] = false
 	can_shoot = true
@@ -151,10 +157,12 @@ func hurt_impulse() -> Vector2:
 	return out
 
 func player_death():
+	print("player dead")
 	if Globals.lives == 0:
 		game_over()
 	else:
 		remove_live_and_respawn()
+
 
 func remove_live_and_respawn():
 	velocity.x = 0
@@ -173,6 +181,13 @@ func game_over():
 	queue_free() # Kill player
 	get_tree().change_scene("res://src/Screens/GameOver.tscn")
 
+func check_player_death():
+	if global_position.y > world_limit:
+		player_death()
+	if health <= 0:
+		health = 100
+		hp_bar.on_health_updated(health)
+		player_death()
 
 
 # Misc
