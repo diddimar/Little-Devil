@@ -19,6 +19,10 @@ config/name="LittleDevil"
 run/main_scene="res://src/Levels/LevelTemplate.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Globals="*res://globals.gd"
+
 [input]
 
 move_left={

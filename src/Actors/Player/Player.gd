@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
-
+export var world_limit = 1040 # Y axis death position and camera Y limit
+export var respawn_point = Vector2(0, 0)
 # Variables for moving around
 const FLOOR_NORMAL = Vector2.UP
 const WALK_SPEED: = 300
@@ -23,16 +24,31 @@ const GUNSHOT = preload("res://src/Actors/Gunshot/GunShot.tscn")
 var bullets = 6
 var can_shoot = true
 
-func _ready():
-	pass
 
+func _ready():
+	$Camera2D.limit_bottom = world_limit
 
 func _physics_process(delta):
-	handle_movement(delta)
-	handle_animation()
-	check_zoom()
+	game_loop()
+	apply_gravity(delta)
+	if not hurt_dead[1]:
+		handle_movement()
+		handle_jump()	
+		handle_animation()
+		check_zoom()
 
-func handle_movement(delta):
+
+func game_loop():
+	vertical_position += global_position.x - vertical_position
+	
+	if global_position.y > world_limit:
+		player_death()
+
+func apply_gravity(delta):
+	velocity.y += GRAVITY * delta
+	velocity = move_and_slide(velocity, FLOOR_NORMAL)
+
+func handle_movement():
 	# Handle horizontal movement
 	var direction = 0
 	if Input.is_action_pressed("move_right"):
@@ -43,18 +59,11 @@ func handle_movement(delta):
 		velocity.x = lerp(velocity.x, direction * WALK_SPEED, acceleration)
 	else:
 		velocity.x = lerp(velocity.x, 0, acceleration)
-	# Handle vertical movement
-	velocity.y += GRAVITY * delta
-	handle_jump()
-	# Move
-	velocity = move_and_slide(velocity, FLOOR_NORMAL)
-
 
 func handle_jump():
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y = -JUMP_SPEED
-
 
 func handle_animation():
 	var shooting: Array = handle_shooting()
@@ -70,8 +79,6 @@ func handle_animation():
 		flip_sprite = true
 
 	emit_signal("animate_movement", flip_sprite, running, shooting, hurt_dead)
-
-	vertical_position += global_position.x - vertical_position
 
 
 ## Shooting Start - returns is_shooting and has_to_reload
@@ -123,25 +130,10 @@ func set_gunshot_start_position():
 ## Shooting End
 
 
-func player_death():
-	hurt_dead[1] = true
-	#emit_signal("animate_movement", Vector2(0,0), is_on_floor(), dead, false)
-	yield(get_tree().create_timer(2.0), "timeout")
-	var point_B = Vector2(495, 645)
-	position = point_B
-	$Camera2D.zoom = Vector2(1, 1)
-	hurt_dead[1] = false
-
+# Player hurt / death Start
 func player_entered_hazard():
 	player_hurt()
 	velocity = hurt_impulse()
-
-func hurt_impulse() -> Vector2:
-	var out = velocity
-	out.y = -800
-	# Ternary operator
-	out.x = -400 if flip_sprite else 400
-	return out
 
 func player_hurt():
 	hurt_dead[0] = true
@@ -151,7 +143,29 @@ func player_hurt():
 	can_shoot = true
 
 
+func hurt_impulse() -> Vector2:
+	var out = velocity
+	out.y = -800
+	# Ternary operator
+	out.x = -400 if flip_sprite else 400
+	return out
 
+func player_death():
+	velocity.x = 0
+	Globals.lives -= 1
+	hurt_dead[1] = true
+	$Hud.remove_live()
+	self.hide()
+	position = respawn_point
+	$Camera2D.zoom = Vector2(1, 1)
+	self.show()
+
+	yield(get_tree().create_timer(1.0), "timeout")
+	hurt_dead[1] = false
+
+
+
+# Misc
 func check_zoom():
 	if Input.is_action_just_pressed("zoom_in"):
 		$Camera2D.zoom = Vector2(0.5, 0.5)
