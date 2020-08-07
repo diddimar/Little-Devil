@@ -151,6 +151,12 @@ func hurt_impulse() -> Vector2:
 	return out
 
 func player_death():
+	if Globals.lives == 0:
+		game_over()
+	else:
+		remove_live_and_respawn()
+
+func remove_live_and_respawn():
 	velocity.x = 0
 	Globals.lives -= 1
 	hurt_dead[1] = true
@@ -159,9 +165,13 @@ func player_death():
 	position = respawn_point
 	$Camera2D.zoom = Vector2(1, 1)
 	self.show()
-
-	yield(get_tree().create_timer(1.0), "timeout")
+	yield(get_tree().create_timer(0.8), "timeout")
 	hurt_dead[1] = false
+
+
+func game_over():
+	queue_free() # Kill player
+	get_tree().change_scene("res://src/Screens/GameOver.tscn")
 
 
 
