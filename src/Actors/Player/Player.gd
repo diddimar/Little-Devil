@@ -68,6 +68,9 @@ func handle_jump():
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y = -JUMP_SPEED
+	var is_jump_interrupted = Input.is_action_just_released("jump") and velocity.y < 0.0
+	if is_jump_interrupted:
+		velocity.y = lerp(velocity.y, 0, 0.5)
 
 func handle_animation():
 	var shooting: Array = handle_shooting()
