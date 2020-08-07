@@ -173,7 +173,7 @@ func remove_live_and_respawn():
 	position = respawn_point
 	$Camera2D.zoom = Vector2(1, 1)
 	self.show()
-	yield(get_tree().create_timer(0.8), "timeout")
+	yield(get_tree().create_timer(0.6), "timeout")
 	hurt_dead[1] = false
 
 
