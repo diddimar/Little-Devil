@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/FlyingEnemy_07.png-5f4b4f3abda07fbd37ee74510f04ac4f.stex"
+path="res://.import/5.png-3078cb803b47b62804e39468d5b9686d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Enemies/Fly/FlyingEnemy_07.png"
-dest_files=[ "res://.import/FlyingEnemy_07.png-5f4b4f3abda07fbd37ee74510f04ac4f.stex" ]
+source_file="res://Assets/Graphics/Enemies/Fly/blood_splatter/5.png"
+dest_files=[ "res://.import/5.png-3078cb803b47b62804e39468d5b9686d.stex" ]
 
 [params]
 

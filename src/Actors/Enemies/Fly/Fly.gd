@@ -101,9 +101,6 @@ func movement(delta):
 
 func kill():
 	dead = true
-	$AnimationPlayer.play("Dead")
-	$Sprite.modulate = Color(0,1,0)
-	yield(get_tree().create_timer(0.8), "timeout")
 	queue_free()
 
 

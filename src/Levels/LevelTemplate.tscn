@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/Graphics/Background/blue_tiles.png" type="Texture" id=3]
 [ext_resource path="res://src/Objects/Hazards/Brazier.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Objects/Hazards/Spikes.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/Actors/Enemies/Fly.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/Actors/Enemies/Fly/Fly.tscn" type="PackedScene" id=6]
 
 [node name="LevelTemplate" type="Node2D"]
 __meta__ = {

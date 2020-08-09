@@ -5,6 +5,7 @@ var velocity = Vector2()
 var direction = 1
 
 var bullet_hit = preload("res://src/Actors/Gunshot/BulletHit.tscn")
+var fly_hit = preload("res://src/Actors/Enemies/Fly/FlyBloodSplatter.tscn")
 
 func _physics_process(delta):
 	velocity.x = speed * delta * direction
@@ -17,13 +18,21 @@ func _on_VisibilityNotifier2D_screen_exited():
 
 
 func _on_GunShot_body_entered(body):
-	var bullet_hit_instance = bullet_hit.instance()
-	bullet_hit_instance.position = get_global_position()
 	if(body.name.begins_with("Fly")):
 		body.kill()
-		bullet_hit_instance.hit_wall = false
-	else:
-		bullet_hit_instance.hit_wall = true
+		var fly_hit_instance = fly_hit.instance()
+		fly_hit_instance.position = get_global_position()
+		if(direction > 0):
+			fly_hit_instance.flip_h = true
+			fly_hit_instance.position.x += 20
+		else:
+			fly_hit_instance.position.x -= 15
+			
+		get_tree().get_root().add_child(fly_hit_instance)
 
-	get_tree().get_root().add_child(bullet_hit_instance)
+	else:
+		var bullet_hit_instance = bullet_hit.instance()
+		bullet_hit_instance.position = get_global_position()
+		get_tree().get_root().add_child(bullet_hit_instance)
+
 	queue_free()

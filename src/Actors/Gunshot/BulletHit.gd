@@ -1,17 +1,16 @@
 extends AnimatedSprite
 
 onready var rng = RandomNumberGenerator.new()
-var hit_wall = true
+
 
 
 func _ready():
 	rotation = randomize_rotation() 
-	if hit_wall:
-		hit_obsticle()
+	randomize_sound()
 	playing = true
 
 
-func hit_obsticle():
+func randomize_sound():
 	randomize_hit_pitch()
 	$AudioStreamPlayer2D.stream = load("res://Assets/Sounds/Player/bullet_hit.wav")
 	$AudioStreamPlayer2D.play()
