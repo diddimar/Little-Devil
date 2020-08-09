@@ -4,11 +4,10 @@
 [ext_resource path="res://src/Actors/Enemies/Fly/Fly.gd" type="Script" id=9]
 [ext_resource path="res://Assets/Graphics/Enemies/Fly/FlyingEnemy_Sheet.png" type="Texture" id=10]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8.31147, 8.00094 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Flying"
 length = 0.4
 loop = true
@@ -26,7 +25,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 6, 0 ), Vector2( 7, 0 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 6.30922, 8.25122 )
 
 [node name="Fly" type="KinematicBody2D"]
@@ -50,12 +49,12 @@ hframes = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Flying"
-anims/Flying = SubResource( 3 )
+anims/Flying = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 1 )

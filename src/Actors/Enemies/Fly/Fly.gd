@@ -1,9 +1,9 @@
 extends KinematicBody2D
 
 
-onready var Player = get_parent().get_parent().get_node("Player")
+onready var root = get_tree().get_root().get_child(1)
+onready var Player = root.get_node("Player")
 
-var dead = false
 var vel = Vector2(0, 0)
 
 var grav = 1200
@@ -27,6 +27,7 @@ var horizontal_movement = 200
 func _ready():
 	set_process(true)
 	randomize_fly_physics()
+
 
 func randomize_fly_physics():
 	randomize()
@@ -65,8 +66,8 @@ func sees_player():
 	return false
 
 func _process(delta):
-	if !dead:
-		movement(delta)
+	movement(delta)
+
 
 func movement(delta):
 	if Player.position.x < position.x - target_player_dist and sees_player():
@@ -100,10 +101,9 @@ func movement(delta):
 
 
 func kill():
-	dead = true
 	queue_free()
 
 
 func _on_Area2D_body_entered(body):
-	if(body.name == "Player" and not dead):
+	if(body.name == "Player"):
 		body.player_hurt(5)

@@ -116,7 +116,7 @@ func is_shooting() -> bool:
 		return false
 
 func shot_fired():
-	yield(get_tree().create_timer(0.2), "timeout")
+	yield(get_tree().create_timer(0.15), "timeout")
 	bullets -= 1
 
 func has_to_reload() -> bool:
