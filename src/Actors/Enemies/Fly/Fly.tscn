@@ -37,8 +37,9 @@ script = ExtResource( 9 )
 shape = SubResource( 1 )
 
 [node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
-position = Vector2( -0.125139, -0.083427 )
-scale = Vector2( 4.63325, 0.783089 )
+position = Vector2( -0.361095, 0.00223541 )
+scale = Vector2( 7.96041, 8.11859 )
+z_index = 2
 process_parent = true
 physics_process_parent = true
 

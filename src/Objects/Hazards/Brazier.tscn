@@ -28,19 +28,20 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 21.8682, 17.3042 )
+extents = Vector2( 23.6048, 17.3042 )
 
 [sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( -21.2127, -6.47842, -11.2865, -7.41486, 17.7432, -7.60215, 21.8636, -6.10384, 22.2382, 27.9826, -21.2127, 28.3572 )
 
 [node name="Brazier" type="StaticBody2D"]
+z_index = 4
 collision_layer = 16
-collision_mask = 9
+collision_mask = 11
 script = ExtResource( 17 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-frame = 3
+frame = 13
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

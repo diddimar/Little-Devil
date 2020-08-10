@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/Graphics/Tiles/pipe.png" type="Texture" id=1]
+[ext_resource path="res://src/Objects/Spawn/SpawnPipe.gd" type="Script" id=2]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+polygon = PoolVector2Array( -37.8169, -75.2027, -37.9116, 37.1555, -43.2947, 36.8895, -42.501, 75.7809, 42.0281, 75.384, 41.8238, 37.0441, 36.9239, 36.71, 37.0186, -74.2004 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "finished"
+length = 1.6
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -60 ), Vector2( 0, -150 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "spawn"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 20 ), Vector2( 0, 10 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "starting"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -120 ), Vector2( 0, -80 ), Vector2( 0, -60 ), Vector2( 0, -50 ), Vector2( 0, -40 ), Vector2( 0, -30 ), Vector2( 0, -20 ), Vector2( 0, -10 ), Vector2( 0, 0 ) ]
+}
+
+[node name="SpawnPipe" type="StaticBody2D"]
+light_mask = 6
+z_index = 1
+collision_layer = 4
+collision_mask = 9
+script = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -37.7663, -75.2762, 36.8681, -74.7143, 36.8157, 36.9223, 41.5351, 36.9223, 41.5351, 75.5032, -42.321, 74.9238, -42.6187, 37.0246, -37.9557, 36.8261 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 0.668169, 32.5178 )
+scale = Vector2( 4.00678, 4.25178 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+light_mask = 6
+occluder = SubResource( 1 )
+light_mask = 6
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 0, 78.25 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/finished = SubResource( 4 )
+anims/spawn = SubResource( 2 )
+anims/starting = SubResource( 3 )
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

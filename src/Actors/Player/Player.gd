@@ -201,7 +201,7 @@ func check_player_death():
 # Misc
 func check_zoom():
 	if Input.is_action_just_pressed("zoom_in"):
-		$Camera2D.zoom = Vector2(0.5, 0.5)
+		$Camera2D.zoom = Vector2(0.75, 0.75)
 		$Camera2D.drag_margin_h_enabled = false
 		$Camera2D.drag_margin_top = 0.4
 	if Input.is_action_just_pressed("zoom_out"):
